@@ -17,8 +17,11 @@ if sc.rtm_connect():
     i = 0
     for x in ob:
         if ('type' in x and x['type'] == 'message'):
-            score = analyzer.polarity_scores(x['text']).catch(Exception)
-            sc.rtm_send_message("general", "Postivity score: " + str(score['compound']*100) + "%")
+            try:
+                score = analyzer.polarity_scores(x['text'])
+                sc.rtm_send_message(x['channel'], "Postivity score: " + str(score['compound']*100) + "%")
+            except: 
+                pass
     time.sleep(1)
 else:
     print ("Connection Failed")
