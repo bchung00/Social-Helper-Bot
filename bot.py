@@ -16,7 +16,7 @@ PosMsg = 'That seemed really positive! Good going!'
 BitPosMsg = 'Looks pretty positive. Nice.'
 NeutralMsg = 'I have no strong feelings one way or the other.'
 BitNegMsg = 'Looks a bit negative. Maybe try rephrasing.'
-NegMsg = 'Looks a bit negative. Maybe try rephrasing.'
+NegMsg = 'Seems pretty negative. Consider rephrasing.'
 
 if sc.rtm_connect():
     print('success')
