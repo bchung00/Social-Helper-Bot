@@ -18,17 +18,28 @@ if sc.rtm_connect():
     for x in ob:
         if ('type' in x and x['type'] == 'message'):
             try:
-                score = analyzer.polarity_scores(x['text'])
+                score = analyzer.polarity_scores(x['text'])['compound']
+                
+                if(score >0.5):
+                    msg = 'That seemed really positive! Good going!'
+                elif(score >= 0.2 and score <= 0.5):
+                    msg = 'Looks pretty positive. Nice.'
+                elif(score >= -0.2 and score < 0.2):
+                    msg =  'I have no strong feelings one way or the other.'
+                elif(score < -0.2 and score > -0.5):
+                    msg = 'Looks a bit negative. Maybe try rephrasing.'
+                elif(score <= -0.5):
+                    msg = 'That seems negative. Rephrasing seems like a good idea.'
                 #sc.rtm_send_message(x['channel'], "Postivity score: " + str(score['compound']*100) + "%",x['ts'],False)
                 if x['channel'][0] == 'C':
                     sc.api_call(
                         "chat.postEphemeral",
                         channel= x['channel'],
-                        text= "Postivity score: " + str(score['compound']*100) + "%",
+                        text= msg,
                         user= x['user']
                         )
                 else:
-                    sc.rtm_send_message(x['channel'], "Postivity score: " + str(score['compound']*100) + "%")
+                    sc.rtm_send_message(x['channel'], msg)
             except: 
                 pass
     time.sleep(1)
