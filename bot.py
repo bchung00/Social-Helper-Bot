@@ -30,6 +30,8 @@ if sc.rtm_connect():
                     msg = 'Looks a bit negative. Maybe try rephrasing.'
                 elif(score <= -0.5):
                     msg = 'That seems negative. Rephrasing seems like a good idea.'
+
+                msg = "Quote: '" + x['text'] + "'\n " + msg
                 #sc.rtm_send_message(x['channel'], "Postivity score: " + str(score['compound']*100) + "%",x['ts'],False)
                 if x['channel'][0] == 'C':
                     sc.api_call(
