@@ -20,13 +20,15 @@ if sc.rtm_connect():
             try:
                 score = analyzer.polarity_scores(x['text'])
                 #sc.rtm_send_message(x['channel'], "Postivity score: " + str(score['compound']*100) + "%",x['ts'],False)
-                sc.api_call(
-                    "chat.postEphemeral",
-                    token = slack_token,
-                    channel=x['channel'],
-                    text="Postivity score: " + str(score['compound']*100) + "%",
-                    user=x['user']
-                    )
+                if x['channel'][0] == 'C':
+                    sc.api_call(
+                        "chat.postEphemeral",
+                        channel= x['channel'],
+                        text= "Postivity score: " + str(score['compound']*100) + "%",
+                        user= x['user']
+                        )
+                else:
+                    sc.rtm_send_message(x['channel'], "Postivity score: " + str(score['compound']*100) + "%")
             except: 
                 pass
     time.sleep(1)
